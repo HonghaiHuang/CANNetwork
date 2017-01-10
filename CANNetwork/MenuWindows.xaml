@@ -1,0 +1,27 @@
+﻿<mui:ModernWindow x:Class="CANNetwork.MenuWindows"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mui="http://firstfloorsoftware.com/ModernUI"
+        Title="CVT阀体测试系统" IsTitleVisible="True" 
+        LogoData="M20.5,3.5C18.3,1.4,15.3,0,12,0C8.7,0,5.7,1.3,3.5,3.5l0,0l0,0C1.3,5.7,0,8.7,0,12c0,3.3,1.3,6.3,3.5,8.5
+	C5.7,22.7,8.7,24,12,24c3.3,0,6.3-1.3,8.5-3.5l0,0v0h0c2.2-2.1,3.5-5.1,3.5-8.5C24,8.7,22.7,5.7,20.5,3.5L20.5,3.5z M19.2,19.2
+	L19.2,19.2L19.2,19.2c-1.8,1.8-4.4,3-7.2,3c-2.8,0-5.3-1.1-7.2-3c-1.8-1.8-3-4.4-3-7.2c0-2.8,1.1-5.3,3-7.2c1.8-1.8,4.4-3,7.2-3
+	c2.8,0,5.3,1.1,7.2,3c1.8,1.8,3,4.4,3,7.2C22.2,14.8,21,17.4,19.2,19.2L19.2,19.2z M19.4,8.5L19.4,8.5l-2.2-2.1
+	c-0.2-0.2-0.6-0.2-0.8,0l-5.8,5.8l-3-3h0C7.4,8.9,7,8.9,6.8,9.2l-2.1,2.1l0,0c-0.2,0.2-0.2,0.6,0,0.8l5.6,5.6c0.2,0.2,0.6,0.2,0.8,0
+	l8.4-8.4C19.6,9.1,19.6,8.7,19.4,8.5L19.4,8.5z"          
+        ContentSource="/CalibrationPage.xaml" Height="1080" Width="1920"  WindowState="Maximized"  >
+
+    <mui:ModernWindow.MenuLinkGroups>
+        <mui:LinkGroup DisplayName="参数标定">
+            <mui:LinkGroup.Links>
+                <mui:Link Source="/CalibrationPage.xaml" />
+            </mui:LinkGroup.Links>
+        </mui:LinkGroup>
+    </mui:ModernWindow.MenuLinkGroups>
+    <mui:ModernWindow.TitleLinks>
+        <mui:Link x:Name="DropOut" DisplayName="通信设置" Source="/CANSetting.xaml" />
+        <mui:Link x:Name="DropOut2" DisplayName="车型管理" Source="/VehicleManagement.xaml" />
+
+    </mui:ModernWindow.TitleLinks>
+
+</mui:ModernWindow>
