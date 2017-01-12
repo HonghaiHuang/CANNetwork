@@ -14,7 +14,7 @@
                 <StackPanel Height="60" Orientation="Horizontal" Margin="0,0,0,20">
                     <Label VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" HorizontalAlignment="Center" Margin="0,0,0,10">车型名称:</Label>
                     <TextBox x:Name="txtModelName"  Width="200"></TextBox>
-                    <Button x:Name="btnAddTemplate" Content="添加模板" Margin="250,0,0,0" Click="btnAddTemplate_Click"></Button>
+                    <Button x:Name="btnAddTemplate" Content="添加模板" Margin="240,0,0,0" Click="btnAddTemplate_Click"></Button>
                     <Button x:Name="btnAdddataToaccess" Content="一键添加" Margin="30,0,0,0" Click="btnAdddataToaccess_Click"></Button>
             </StackPanel>
                 <StackPanel Height="420" >

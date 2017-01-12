@@ -1,5 +1,4 @@
 ﻿
-using CVTSTS.DataClass;
 /**
 * 命名空间: CANNetwork.DataClass
 *
@@ -23,6 +22,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using CVTSTS.DataClass;
 
 namespace CANNetwork.DataClass
 {
@@ -41,7 +41,7 @@ namespace CANNetwork.DataClass
         /// <summary>
         /// 下位机指令列表
         /// </summary>
-        private static volatile ArrayList TableOrderList;
+        private static volatile ArrayList TableOrderList = new ArrayList();
 
         /// <summary>
         /// 下位机指令下发间隔
@@ -51,12 +51,15 @@ namespace CANNetwork.DataClass
         /// <summary>
         /// 设定ID
         /// </summary>
-        public static string CanSendID = "7ec";
+        private static string CanSendID = "7ec";
 
         /// <summary>
         /// CAN控制模块对象
         /// </summary>
         private static CANControl CAN = new CANControl();
+
+
+        public static string ModelNumer = "通用车型";
 
         /// <summary>
         /// 连接Can
@@ -77,6 +80,16 @@ namespace CANNetwork.DataClass
                 Canstate = false;
             }
             return Canstate;
+        }
+
+        /// <summary>
+        /// 设置ID
+        /// </summary>
+        /// <param name="IDdata"></param>
+        public static void SetCanID(string IDdata)
+        {
+            CanSendID = IDdata;
+            CAN.CanID = IDdata;
         }
 
         /// <summary>

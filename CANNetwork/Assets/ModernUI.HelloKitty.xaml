@@ -6,7 +6,7 @@
         <ResourceDictionary Source="/FirstFloor.ModernUI;component/Assets/ModernUI.Dark.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
-    <Color x:Key="AccentColor">#f472d0</Color>
+    <Color x:Key="AccentColor">#60a917</Color>
 
     <Rectangle x:Key="WindowBackgroundContent" x:Shared="false" >
         <Rectangle.Fill>

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,64 +29,100 @@ namespace CANNetwork
         public CalibrationPage()
         {
             InitializeComponent();
-            // string[] daf= AccessHelper.GetTableName();
             UpdatatoDG();
-          //  MessageBox.Show(AdjustID(40, "6fa"));
         }
 
 
         private void UpdatatoDG()
         {
-
-            tblDatas = new System.Data.DataTable("Datas");
-            string sql = "select " + "*" + " from " + "通用车型";
-            //     tblDatas = AccessTestInfo.SelectToDataTable_DataGrid(sql, "");
-
-            tblDatas = AccessHelper.SelectToDataTable_DataGrid(sql, "");
-            DG1.ItemsSource = tblDatas.DefaultView;
-
-        }
-
-        private void btnConnect_Click(object sender, RoutedEventArgs e)
-        {
-            if (DataProcess.ConnetCan()==true)
+            if(DataProcess.ModelNumer!="")
             {
-                btnConnect.Visibility = Visibility.Collapsed;
-                btnDisConnect.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                btnConnect.Visibility = Visibility.Visible;
-                btnDisConnect.Visibility = Visibility.Collapsed;
-            }
-        }
+                tblDatas = new System.Data.DataTable("Datas");
+                string sql = "select " + "*" + " from " + DataProcess.ModelNumer;
 
-        private void btnDisConnect_Click(object sender, RoutedEventArgs e)
-        {
-            if (DataProcess.DisConnetCan() == true)
-            {
-                btnConnect.Visibility = Visibility.Visible;
-                btnDisConnect.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                btnConnect.Visibility = Visibility.Collapsed;
-                btnDisConnect.Visibility = Visibility.Visible;
+                tblDatas = AccessHelper.SelectToDataTable_DataGrid(sql, "");
+                DG1.ItemsSource = tblDatas.DefaultView;
             }
 
         }
 
+        //private void btnConnect_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (DataProcess.ConnetCan()==true)
+        //    {
+        //        btnConnect.Visibility = Visibility.Collapsed;
+        //        btnDisConnect.Visibility = Visibility.Visible;
+        //    }
+        //    else
+        //    {
+        //        btnConnect.Visibility = Visibility.Visible;
+        //        btnDisConnect.Visibility = Visibility.Collapsed;
+        //    }
+        //}
+
+        //private void btnDisConnect_Click(object sender, RoutedEventArgs e)
+        //{
+        //    if (DataProcess.DisConnetCan() == true)
+        //    {
+        //        btnConnect.Visibility = Visibility.Visible;
+        //        btnDisConnect.Visibility = Visibility.Collapsed;
+        //    }
+        //    else
+        //    {
+        //        btnConnect.Visibility = Visibility.Collapsed;
+        //        btnDisConnect.Visibility = Visibility.Visible;
+        //    }
+
+        //}
 
 
         /// <summary>
         /// 单通道标定
         /// </summary>
-        private void SingleChannelCalibration(string[] dada)
+        private void SingleChannelCalibration(string[] data)
         {
-            string[] SendData=new string[2];
-            SendData[0] =AdjustID(Convert.ToInt32(dada[0]) + 1, dada[1]);
-            SendData[1] = AdjustParameter(Convert.ToInt32(dada[0]) + 9, Convert.ToInt32(dada[1]));
+            string[] SendData=new string[5];
+            SendData[0] =AdjustID(Convert.ToInt32(data[0]) + 1, data[1]);
+            SendData[1] = AdjustParameter(Convert.ToInt32(data[0]) + 9, Convert.ToInt32(data[2]));
+            SendData[2] = AdjustParameter(Convert.ToInt32(data[0]) + 17, Convert.ToInt32(data[3]));
+            SendData[3] = AdjustByte(Convert.ToInt32(data[0]) + 33, Convert.ToInt32(data[4]), Convert.ToInt32(5));
+            SendData[4] = AdjustEnable(Convert.ToInt32(data[0]) + 25, Convert.ToInt32(data[6]));
             DataProcess.DeviceDemarcate(SendData);
+        }
+
+
+        private void SingleRowCalibration(string HeaderName, string Value,string[] data)
+        {
+            
+            switch (HeaderName)
+            {
+                case "ID标定值":
+                    
+                    DataProcess.SendOrderToCan(AdjustID(Convert.ToInt32(data[0]) + 1, Value));
+                    break;
+                case "参数a":
+                    DataProcess.SendOrderToCan(AdjustParameter(Convert.ToInt32(data[0]) + 9, Convert.ToInt32(Value))); 
+                    break;
+
+                case "参数b":
+                    DataProcess.SendOrderToCan(AdjustParameter(Convert.ToInt32(data[0]) + 17, Convert.ToInt32(Value))); 
+                    break;
+
+                case "开始字节":
+                    DataProcess.SendOrderToCan(AdjustByte(Convert.ToInt32(data[0]) + 33, Convert.ToInt32(data[4]), Convert.ToInt32(5)));
+                    break;
+
+                case "末始字节":
+                    DataProcess.SendOrderToCan(AdjustByte(Convert.ToInt32(data[0]) + 33, Convert.ToInt32(data[4]), Convert.ToInt32(5)));
+                    break;
+
+                case "是否干预":
+                    DataProcess.SendOrderToCan(AdjustEnable(Convert.ToInt32(data[0]) + 25, Convert.ToInt32(Value)));
+                    break;
+
+
+
+            }
         }
 
         /// <summary>
@@ -110,6 +147,30 @@ namespace CANNetwork
         }
 
         /// <summary>
+        /// 调节字节类
+        /// </summary>
+        /// <returns></returns>
+        private string AdjustByte(int VariableNumber, int Updata1, int Updata2)
+        {
+            string data = "01 00 " + ValueToHex(VariableNumber) + " " + Updata1.ToString("X2")+" " + Updata2.ToString("X2") + " 00 00";
+            return data;
+
+        }
+
+
+        /// <summary>
+        /// 调节干预类
+        /// </summary>
+        /// <param name="VariableNumber"></param>
+        /// <param name="Updata"></param>
+        private string AdjustEnable(int VariableNumber, int Updata)
+        {
+            string data = "01 00 " + ValueToHex(VariableNumber) + " " + ValueToHex(Updata) + " 00 00";
+            return data;
+
+        }
+
+        /// <summary>
         /// 数值装四位十六进制
         /// </summary>
         /// <param name="data"></param>
@@ -121,5 +182,51 @@ namespace CANNetwork
             return valueL + " " + valueH;
         }
 
+        /// <summary>
+        /// 发生于一个单元格编辑已被确认或取消
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DG1_CellEditEnded(object sender, Telerik.Windows.Controls.GridViewCellEditEndedEventArgs e)
+        {
+
+            Debug.WriteLine(e.Cell.Column.Header);
+
+
+            DataRowView mySelectedElement = (DataRowView)DG1.SelectedItem;
+            string[] data = new string[7];
+            //要添加这条件
+            if (mySelectedElement != null)
+            {
+                for (int i = 0; i < 7; i++)
+                {
+                    data[i] = mySelectedElement.Row[i].ToString();
+                }
+            //    SingleChannelCalibration(data);
+            }
+
+
+            if (e.NewData != e.OldData&& e.NewData.ToString()!="")
+            {
+                SingleRowCalibration(e.Cell.Column.Header.ToString(), e.NewData.ToString(), data);
+
+            }
+        }
+
+        private void btnSingleCalibration_Click(object sender, RoutedEventArgs e)
+        {
+            DataRowView mySelectedElement = (DataRowView)DG1.SelectedItem;
+            string[] data = new string[7];
+            //要添加这条件
+            if (mySelectedElement != null)
+            {
+                for (int i = 0; i < 7; i++)
+                {
+                    data[i] = mySelectedElement.Row[i].ToString();
+                }
+                    SingleChannelCalibration(data);
+            }
+
+        }
     }
 }

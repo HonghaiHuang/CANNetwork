@@ -157,6 +157,9 @@ namespace CVTSTS.DataClass
         /// </summary>
         private bool messageBoxNotice = false;
 
+
+        public string CanID = "7ec";
+
         #endregion
 
         /// <summary>
@@ -300,9 +303,10 @@ namespace CVTSTS.DataClass
         /// <returns>接收到的数据</returns>
         public unsafe string[] RecviveData()
         {
-
+            dataarr = null;
             dataarr = new string[] {};
-            if (!connected) return dataarr;
+            if (!connected)
+            { return dataarr;}
             var str = "";
             var saveCount = 0;
             var strarr = new string[100000];
@@ -327,7 +331,7 @@ namespace CVTSTS.DataClass
                                 typeof(VCI_CAN_OBJ));
 
                     var ID = Convert.ToString((int) obj.ID, 16);
-                    if (ID == "7eb")
+                    if (ID == CanID)
                     {
                         if (obj.RemoteFlag == 0)
                         {
