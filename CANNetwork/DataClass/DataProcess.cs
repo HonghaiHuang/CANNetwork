@@ -145,36 +145,6 @@ namespace CANNetwork.DataClass
             {
                 if (CAN != null)
                 {
-                    #region 数据处理部分
-
-                    //发送下位机指令List中的指令
-                    if (TableOrderList.Count > 0)
-                    {
-                        //if (DateTime.Now > tableOrderInterval)
-                        //{
-                            if ((TableOrderList.Count > 0&& IsSendData[0]== IsSendData[1])||(DateTime.Now > tableOrderInterval))
-                            {
-                                if ((DateTime.Now > tableOrderInterval)&&(IsSendData[0] != IsSendData[1]))
-                                {
-                                    MessageBox.Show("接收指令超时：" + IsSendData[0]);
-                                    
-                                    OnMsgReceived?.Invoke(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff  ") + "接收指令超时：" + IsSendData[0]);
-                                }
-                                else
-                                {
-                                 }
-                                IsSendData[0] = TableOrderList[0].ToString();
-                                CAN.SendData(CanSendID, TableOrderList[0].ToString());
-                            /* Debug.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") +
-                                                "                           向下位机发送指令：" + TableOrderList[0].ToString());*/
-                            OnMsgReceived?.Invoke(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff  ") + "发送指令：" + IsSendData[0]);
-                            tableOrderInterval = DateTime.Now.AddMilliseconds(2500);
-                                TableOrderList.RemoveAt(0);
-                            }
-                        //}
-                    }
-
-                    #endregion
 
                     #region 数据接收部分
 
@@ -189,7 +159,7 @@ namespace CANNetwork.DataClass
                         foreach (string t in data)
                         {
                             recvData = t.Split(' ');
-                             Debug.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff ") + " 接到一组数据:" + t);
+                            Debug.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff ") + " 接到一组数据:" + t);
                             IsSendData[1] = t;
 
                             if (IsSendData[1] != "FF FF FF FF FF FF FF FF")
@@ -201,8 +171,8 @@ namespace CANNetwork.DataClass
                             }
                             else
                             {
-                                MessageBox.Show("操作失败：" + IsSendData[0]);
-                                OnMsgReceived?.Invoke(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff  ") + "操作失败：" + IsSendData[0]);
+                                //   MessageBox.Show("操作失败：" + IsSendData[1]);
+                                OnMsgReceived?.Invoke(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff  ") + "操作失败：" + IsSendData[1]);
                             }
                             //处理下位机采集数据
                             if (recvData[0] == "00")
@@ -215,7 +185,7 @@ namespace CANNetwork.DataClass
                                 }
                                 if (collocetMcuData)
                                 {
-                                    
+
                                 }
                             }
 
@@ -227,6 +197,37 @@ namespace CANNetwork.DataClass
                     }
 
                     #endregion
+
+                    #region 数据处理部分
+
+                    //发送下位机指令List中的指令
+                    if (TableOrderList.Count > 0)
+                    {
+                        //if (DateTime.Now > tableOrderInterval)
+                        //{
+                            if ((TableOrderList.Count > 0&& IsSendData[0]== IsSendData[1])||(DateTime.Now > tableOrderInterval)|| IsSendData[1] == "FF FF FF FF FF FF FF FF")
+                            {
+                                if ((DateTime.Now > tableOrderInterval)&&(IsSendData[0] != IsSendData[1])&& IsSendData[1] != "FF FF FF FF FF FF FF FF")
+                                {
+                                  //  MessageBox.Show("接收指令超时：" + IsSendData[1]);
+                                    
+                                    OnMsgReceived?.Invoke(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff  ") + "接收指令超时！" );
+                                }
+                                IsSendData[0] = TableOrderList[0].ToString();
+                                CAN.SendData(CanSendID, TableOrderList[0].ToString());
+                            /* Debug.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") +
+                                                "                           向下位机发送指令：" + TableOrderList[0].ToString());*/
+                            OnMsgReceived?.Invoke(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff  ") + "发送指令：" + IsSendData[0]);
+                            tableOrderInterval = DateTime.Now.AddMilliseconds(2500);
+                            IsSendData[1] = "0";
+                            TableOrderList.RemoveAt(0);
+                            }
+                            
+                        //}
+                    }
+                    
+                    #endregion
+
 
 
 
