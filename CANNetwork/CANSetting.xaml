@@ -97,7 +97,7 @@
                 </StackPanel>
 
                 <StackPanel Margin="150" Height="90" >
-                    <Button x:Name="btnStarCAN"  Margin="25,25" Height="40" Width="200" HorizontalAlignment="Center" FontSize="24" Visibility="Visible" Command="mui:LinkCommands.NavigateLink" CommandParameter="/CalibrationPage.xaml" Click="btnStarCAN_Click">确定并启动CAN</Button>
+                    <Button x:Name="btnStarCAN"  Margin="25,25" Height="40" Width="200"  HorizontalAlignment="Center" FontSize="24" Visibility="Visible" Command="mui:LinkCommands.NavigateLink" CommandParameter="/CalibrationPage.xaml" Click="btnStarCAN_Click">确定并启动CAN</Button>
                     <Button x:Name="btnStopCAN"  Margin="25,25" Height="40" Width="200" HorizontalAlignment="Center" FontSize="24" Visibility="Collapsed" Click="btnStopCAN_Click">断开连接</Button>
 
                 </StackPanel>

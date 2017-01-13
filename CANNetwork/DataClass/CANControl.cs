@@ -277,7 +277,7 @@ namespace CVTSTS.DataClass
             var nTimeOut = 3000;
             //Debug.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "                CAN开始发送数据");
             VCI_SetReference(m_devtype, m_devind, m_canind, 4, (byte*) &nTimeOut);
-            Debug.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff ") + id + ": " + strdata);
+       //     Debug.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss fff ") + id + ": " + strdata);
             //Debug.WriteLine(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "                CAN结束发送数据");
 
             if (VCI_Transmit(m_devtype, m_devind, m_canind, ref sendobj, 1) == 0)

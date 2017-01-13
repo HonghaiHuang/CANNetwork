@@ -1361,7 +1361,7 @@
     
     <!--弥漫阴影按键-->
     <ControlTemplate x:Key="ButtonControlTemplate--start" TargetType="{x:Type Button}">
-        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0" SnapsToDevicePixels="True" Height="111" Width="212">
+        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0" SnapsToDevicePixels="True" Height="40" Width="200">
             <Border.Background>
                 <ImageBrush Stretch="None" ImageSource="/Assets/btn_start.png" />
             </Border.Background>

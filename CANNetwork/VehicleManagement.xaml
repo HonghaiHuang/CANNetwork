@@ -8,16 +8,16 @@
              mc:Ignorable="d" 
              d:DesignHeight="1080" d:DesignWidth="1920">
     <Grid>
-        <GroupBox x:Name="groupBox" Header="车型管理" HorizontalAlignment="Left" Height="600" Margin="460,200,0,0" VerticalAlignment="Top" Width="1000" FontSize="36">
+        <GroupBox x:Name="groupBox" Header="车型管理" HorizontalAlignment="Left" Height="610" Margin="360,200,0,0" VerticalAlignment="Top" Width="1200" FontSize="36" >
             <StackPanel>
                 <StackPanel Height="40"/>
                 <StackPanel Height="60" Orientation="Horizontal" Margin="0,0,0,20">
                     <Label VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" HorizontalAlignment="Center" Margin="0,0,0,10">车型名称:</Label>
                     <TextBox x:Name="txtModelName"  Width="200"></TextBox>
-                    <Button x:Name="btnAddTemplate" Content="添加模板" Margin="240,0,0,0" Click="btnAddTemplate_Click"></Button>
+                    <Button x:Name="btnAddTemplate" Content="添加模板" Margin="440,0,0,0" Click="btnAddTemplate_Click"></Button>
                     <Button x:Name="btnAdddataToaccess" Content="一键添加" Margin="30,0,0,0" Click="btnAdddataToaccess_Click"></Button>
             </StackPanel>
-                <StackPanel Height="420" >
+                <StackPanel Height="440" >
                     <telerik:RadGridView  x:Name="DG1" GroupRenderMode="Flat"
 								 ItemsSource="{Binding}"
 								 CanUserFreezeColumns="False"
@@ -25,7 +25,7 @@
 								 AutoGenerateColumns="False"
 								 Grid.Row="0"
 								 SelectionMode="Extended"
-								 ShowGroupPanel="False" Background="#4C000000" Grid.ColumnSpan="2" Height="420">
+								 ShowGroupPanel="False" Background="#4C000000" Grid.ColumnSpan="2" Height="440">
 
                         <telerik:RadGridView.Columns >
                             <telerik:GridViewDataColumn IsReadOnly="True" Header="通道" 

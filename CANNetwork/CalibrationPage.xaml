@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CANNetwork"
-      xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" x:Class="CANNetwork.CalibrationPage"
+      xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"  x:Class="CANNetwork.CalibrationPage"
       mc:Ignorable="d" 
       d:DesignHeight="1080" d:DesignWidth="1920"
       Title="CalibrationPage">
@@ -18,22 +18,21 @@
                 </StackPanel>
             </StackPanel>
         </GroupBox>-->
-        <GroupBox BorderBrush="Black" Margin="460,200,0,0" BorderThickness="1" HorizontalAlignment="Left" Height="600"  VerticalAlignment="Top" Width="1000" Header="标定功能" FontSize="36">
+        <GroupBox BorderBrush="Black" Margin="360,200,0,0" BorderThickness="1" HorizontalAlignment="Left" Height="610"  VerticalAlignment="Top" Width="1200" Header="标定功能" FontSize="36">
             <StackPanel>
                 <StackPanel Height="40"/>
                 <StackPanel Height="60" Orientation="Horizontal" Margin="0,0,0,20">
-                    <Button x:Name="btnSingleCalibration" Content="单通道标定" Margin="560,0,0,0" Click="btnSingleCalibration_Click"></Button>
-                    <Button x:Name="btnAdddataToaccess" Content="一键标定" Margin="30,0,0,0" ></Button>
+                    <Button x:Name="btnSingleCalibration" Content="单通道标定" Margin="760,0,0,0" Click="btnSingleCalibration_Click"></Button>
+                    <Button x:Name="btnAdddata" Content="一键标定" Margin="30,0,0,0" Click="btnAdddata_Click" ></Button>
                 </StackPanel>
-                <StackPanel Height="420" >
+                <StackPanel Height="440" >
                     <telerik:RadGridView  x:Name="DG1" GroupRenderMode="Flat"
 								 ItemsSource="{Binding}"
 								 CanUserFreezeColumns="False"
 								 RowIndicatorVisibility="Collapsed"
 								 AutoGenerateColumns="False"
-								 Grid.Row="0"
-								 SelectionMode="Extended"
-								 ShowGroupPanel="False" Background="#4C000000" Grid.ColumnSpan="2" Height="420" CellEditEnded="DG1_CellEditEnded">
+								 SelectionMode="Single"
+								 ShowGroupPanel="False" Background="#4C000000"  Height="440" CellEditEnded="DG1_CellEditEnded">
 
                         <telerik:RadGridView.Columns >
                             <telerik:GridViewDataColumn IsReadOnly="True" Header="通道" 
@@ -41,7 +40,7 @@
 												IsGroupable="False"
 												IsFilterable="False" Language="zh-cn" FooterTextAlignment="Center" HeaderTextAlignment="Center" TextAlignment="Center"/>
                             <telerik:GridViewDataColumn Width="*"
-                                    Header="ID标定"
+                                    Header="ID标定值"
 												DataMemberBinding="{Binding ID标定值}"
 												IsSortable="False"  Language="zh-cn" FooterTextAlignment="Center" HeaderTextAlignment="Center" TextAlignment="Center"  >
 
@@ -87,6 +86,9 @@
                 </StackPanel>
             </StackPanel>
         </GroupBox>
-
+        <StackPanel Margin="360,820,0,0" Width="1200"  HorizontalAlignment="Left"   VerticalAlignment="Top">
+            <!--<local:MarqueeControl x:Name="scrollingTextControl" ShowType="Left" Speed="2" Content="你好" Height="189"/>-->
+            <TextBox x:Name="TxtMsg" Height="100" Width="1200" VerticalScrollBarVisibility="Visible"></TextBox>
+        </StackPanel>
     </Grid>
 </Page>

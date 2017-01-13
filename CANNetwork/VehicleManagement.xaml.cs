@@ -75,7 +75,6 @@ namespace CANNetwork
             try
             {
 
-                System.Data.DataTable dt = null;
 
                 System.Data.DataTable tmpdt = ((DataView)dg.ItemsSource).Table;
                 return tmpdt;

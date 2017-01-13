@@ -239,7 +239,6 @@ namespace CANNetwork.DataClass
                 }
                 catch (Exception e)
                 {
-                    int i = 0;
                     //     LogHelper.log(e.Message);
                 }
             }

@@ -30,8 +30,37 @@ namespace CANNetwork
         {
             InitializeComponent();
             UpdatatoDG();
+
+            DataProcess.OnMsgReceived += new DataProcess.ReceiveMsgHandler(Logger);
+            if (DataProcess.Canstate)
+            {
+                Logger("通信正常！");
+            }
+            else
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    Logger("通信异常！");
+
+                }
+
+            }
+
         }
 
+        private void Logger(string msgdata)
+        {
+
+            this.Dispatcher.BeginInvoke(new Action(() =>
+            {
+                TxtMsg.AppendText(msgdata + "\r\n");  //添加文本
+                TxtMsg.ScrollToLine(TxtMsg.LineCount-1);    //自动显示至最后行
+
+                //进行界面赋值
+            //    TxtMsg.Text += msgdata+"\r\n";
+            }));
+
+        }
 
         private void UpdatatoDG()
         {
@@ -131,6 +160,7 @@ namespace CANNetwork
         private string AdjustID(int VariableNumber,string Updata)
         {
             string data = "01 00 " + ValueToHex(VariableNumber)+" "+ ValueToHex(Int32.Parse(Updata, System.Globalization.NumberStyles.HexNumber))+" 00 00";
+           
             return data;
         }
 
@@ -189,27 +219,31 @@ namespace CANNetwork
         /// <param name="e"></param>
         private void DG1_CellEditEnded(object sender, Telerik.Windows.Controls.GridViewCellEditEndedEventArgs e)
         {
-
-            Debug.WriteLine(e.Cell.Column.Header);
-
-
-            DataRowView mySelectedElement = (DataRowView)DG1.SelectedItem;
-            string[] data = new string[7];
-            //要添加这条件
-            if (mySelectedElement != null)
+            Telerik.Windows.Controls.GridViewCellEditEndedEventArgs edata = e;
+            if (edata.NewData != "")
             {
-                for (int i = 0; i < 7; i++)
+                DataRowView mySelectedElement = (DataRowView)DG1.SelectedItem;
+                string[] data = new string[7];
+
+                //要添加这条件
+                if (mySelectedElement != null)
                 {
-                    data[i] = mySelectedElement.Row[i].ToString();
+                    for (int i = 0; i < 7; i++)
+                    {
+                        data[i] = mySelectedElement.Row[i].ToString();
+                    }
+                    //    SingleChannelCalibration(data);
                 }
-            //    SingleChannelCalibration(data);
+
+                if (edata.NewData != edata.OldData && edata.NewData.ToString() != "")
+                {
+                    SingleRowCalibration(edata.Cell.Column.Header.ToString(), edata.NewData.ToString(), data);
+
+                }
             }
-
-
-            if (e.NewData != e.OldData&& e.NewData.ToString()!="")
+            else
             {
-                SingleRowCalibration(e.Cell.Column.Header.ToString(), e.NewData.ToString(), data);
-
+                MessageBox.Show("输入格式不正确！");
             }
         }
 
@@ -228,5 +262,43 @@ namespace CANNetwork
             }
 
         }
+
+        private void btnAdddata_Click(object sender, RoutedEventArgs e)
+        {
+            string[] data = new string[7];
+            DataTable DGDt = DataGridToDatable(DG1);
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 7; j++)
+                {
+                    data[j] = DGDt.Rows[i][j].ToString();
+                }
+
+                SingleChannelCalibration(data);
+            }
+
+        }
+
+        /// <summary>
+        /// DataGrid转Datable
+        /// </summary>
+        /// <param name="dg"></param>
+        /// <returns></returns>
+        public System.Data.DataTable DataGridToDatable(Telerik.Windows.Controls.RadGridView dg)
+        {
+            try
+            {
+
+
+                System.Data.DataTable tmpdt = ((DataView)dg.ItemsSource).Table;
+                return tmpdt;
+            }
+            catch (System.Exception ex)
+            {
+                throw ex;
+                //  return null;
+            }
+        }
+
     }
 }

@@ -105,6 +105,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DataClass\ImportExcel.cs" />
+    <Compile Include="MarqueeControl.xaml.cs">
+      <DependentUpon>MarqueeControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VehicleManagement.xaml.cs">
       <DependentUpon>VehicleManagement.xaml</DependentUpon>
     </Compile>
@@ -146,6 +149,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MarqueeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MenuWindows.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
