@@ -104,17 +104,17 @@ namespace CANNetwork
 
         //}
 
-
+        private string[] SendData;
         /// <summary>
         /// 单通道标定
         /// </summary>
         private void SingleChannelCalibration(string[] data)
         {
-            string[] SendData=new string[5];
+            SendData=new string[5];
             SendData[0] =AdjustID(Convert.ToInt32(data[0]) + 1, data[1]);
             SendData[1] = AdjustParameter(Convert.ToInt32(data[0]) + 9, Convert.ToInt32(data[2]));
             SendData[2] = AdjustParameter(Convert.ToInt32(data[0]) + 17, Convert.ToInt32(data[3]));
-            SendData[3] = AdjustByte(Convert.ToInt32(data[0]) + 33, Convert.ToInt32(data[4]), Convert.ToInt32(5));
+            SendData[3] = AdjustByte(Convert.ToInt32(data[0]) + 33, Convert.ToInt32(data[4]), Convert.ToInt32(data[5]));
             SendData[4] = AdjustEnable(Convert.ToInt32(data[0]) + 25, Convert.ToInt32(data[6]));
             DataProcess.DeviceDemarcate(SendData);
         }
@@ -138,11 +138,11 @@ namespace CANNetwork
                     break;
 
                 case "开始字节":
-                    DataProcess.SendOrderToCan(AdjustByte(Convert.ToInt32(data[0]) + 33, Convert.ToInt32(data[4]), Convert.ToInt32(5)));
+                    DataProcess.SendOrderToCan(AdjustByte(Convert.ToInt32(data[0]) + 33, Convert.ToInt32(data[4]), Convert.ToInt32(data[5])));
                     break;
 
                 case "末始字节":
-                    DataProcess.SendOrderToCan(AdjustByte(Convert.ToInt32(data[0]) + 33, Convert.ToInt32(data[4]), Convert.ToInt32(5)));
+                    DataProcess.SendOrderToCan(AdjustByte(Convert.ToInt32(data[0]) + 33, Convert.ToInt32(data[4]), Convert.ToInt32(data[5])));
                     break;
 
                 case "是否干预":
@@ -182,7 +182,7 @@ namespace CANNetwork
         /// <returns></returns>
         private string AdjustByte(int VariableNumber, int Updata1, int Updata2)
         {
-            string data = "01 00 " + ValueToHex(VariableNumber) + " " + Updata1.ToString("X2")+" " + Updata2.ToString("X2") + " 00 00";
+            string data = "01 00 " + ValueToHex(VariableNumber) + " " + ValueTo4Hex(Updata1) + " " + ValueTo4Hex(Updata2) + " 00 00";
             return data;
 
         }
@@ -211,6 +211,19 @@ namespace CANNetwork
             var valueL = (data % 256).ToString("X2");
             return valueL + " " + valueH;
         }
+
+
+        /// <summary>
+        /// 数值装2位十六进制
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        private string ValueTo4Hex(int data)
+        {
+            var valueL = (data % 16).ToString("X2");
+            return valueL;
+        }
+
 
         /// <summary>
         /// 发生于一个单元格编辑已被确认或取消
