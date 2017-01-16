@@ -52,8 +52,8 @@ namespace CANNetwork
             {
                 if (DataProcess.ConnetCan() == true)
                 {
-                    DataProcess.SendOrderToCan(AdjustID(1, txtCanID.Text));
-
+                 //   DataProcess.SendOrderToCan(AdjustID(1, txtCanID.Text));
+                    SetID();
                     btnStarCAN.Visibility = Visibility.Collapsed;
                     btnStopCAN.Visibility = Visibility.Visible;
                 }
@@ -81,15 +81,48 @@ namespace CANNetwork
 
         }
 
+        private string SaveOldID="";
+        private void SetID()
+        {
+            if(SaveOldID == "")
+            {
+                DataProcess.SetCanID(txtCanID.Text);
+                DataProcess.SendOrderToCan(AdjustID(1, txtCanID.Text));
+            }
+            else
+            {
+                if (SaveOldID != txtCanID.Text)
+                {
+                    DataProcess.SendOrderToCan(AdjustID(1, txtCanID.Text));
+                    System.Threading.Thread.Sleep(50);
+                    DataProcess.SetCanID(txtCanID.Text);
+                }
+                else
+                {
+                    DataProcess.SendOrderToCan(AdjustID(1, txtCanID.Text));
+                    DataProcess.SetCanID(txtCanID.Text);
+                }
+            }
+            SaveOldID = txtCanID.Text;
+
+
+            DataProcess.SendOrderToCan(AdjustSleep(ComboSleep.SelectedIndex));
+            DataProcess.SendOrderToCan(Adjustwatchdog(Combowatchdog.SelectedIndex));
+
+            //  DataProcess.SetCanID(SaveOldID);
+
+
+        }
+
         private bool IntData()
         {
             if(txtCanID.Text!="")
             {
-                DataProcess.SetCanID(txtCanID.Text);
 
+                
                 if (ComboModel.Text!="")
                 {
-                    DataProcess.ModelNumer = ComboModel.Text;
+                    DataProcess.ModelNumer = ComboModel.Text;                    
                     return true;
                 }
                 else
@@ -114,6 +147,32 @@ namespace CANNetwork
             string data = "01 00 " + ValueToHex(VariableNumber) + " " + ValueToHex(Int32.Parse(Updata, System.Globalization.NumberStyles.HexNumber)) + " 00 00";
             return data;
         }
+
+        /// <summary>
+        /// 睡眠模式，1是睡眠模式，0是非睡眠模式
+        /// </summary>
+        /// <param name="Senddata"></param>
+        /// <returns></returns>
+        private string AdjustSleep(int Senddata)
+        {
+            string data = "01 00 2b 00 "   + ValueToHex(Senddata) + " 00 00";
+            return data;
+
+        }
+
+        /// <summary>
+        /// 看门狗模式，1是打开看门狗模式，0是关闭看门狗模式
+        /// </summary>
+        /// <param name="Senddata"></param>
+        /// <returns></returns>
+        private string Adjustwatchdog(int Senddata)
+        {
+            string data = "01 00 2c 00 " + ValueToHex(Senddata) + " 00 00";
+            return data;
+
+        }
+
+
         /// <summary>
         /// 数值装四位十六进制
         /// </summary>

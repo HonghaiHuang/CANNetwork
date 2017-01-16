@@ -88,7 +88,7 @@
         </GroupBox>
         <StackPanel Margin="360,820,0,0" Width="1200"  HorizontalAlignment="Left"   VerticalAlignment="Top">
             <!--<local:MarqueeControl x:Name="scrollingTextControl" ShowType="Left" Speed="2" Content="你好" Height="189"/>-->
-            <TextBox x:Name="TxtMsg" Height="100" Width="1200" VerticalScrollBarVisibility="Visible"></TextBox>
+            <RichTextBox x:Name="TxtMsg" Height="100" Width="1200" VerticalScrollBarVisibility="Visible"></RichTextBox>
         </StackPanel>
     </Grid>
 </Page>

@@ -53,8 +53,19 @@ namespace CANNetwork
 
             this.Dispatcher.BeginInvoke(new Action(() =>
             {
+                
+                if (msgdata.Contains("操作失败")|| msgdata.Contains("超时"))
+                {
+
+                    TxtMsg.SelectionBrush = Brushes.Red;
+                }
+                else
+                {
+                    TxtMsg.SelectionBrush = Brushes.White;
+                }
+                TxtMsg.SelectionBrush = Brushes.Red;
                 TxtMsg.AppendText(msgdata + "\r\n");  //添加文本
-                TxtMsg.ScrollToLine(TxtMsg.LineCount-1);    //自动显示至最后行
+                TxtMsg.ScrollToEnd();    //自动显示至最后行
 
                 //进行界面赋值
             //    TxtMsg.Text += msgdata+"\r\n";
@@ -75,34 +86,6 @@ namespace CANNetwork
 
         }
 
-        //private void btnConnect_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (DataProcess.ConnetCan()==true)
-        //    {
-        //        btnConnect.Visibility = Visibility.Collapsed;
-        //        btnDisConnect.Visibility = Visibility.Visible;
-        //    }
-        //    else
-        //    {
-        //        btnConnect.Visibility = Visibility.Visible;
-        //        btnDisConnect.Visibility = Visibility.Collapsed;
-        //    }
-        //}
-
-        //private void btnDisConnect_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (DataProcess.DisConnetCan() == true)
-        //    {
-        //        btnConnect.Visibility = Visibility.Visible;
-        //        btnDisConnect.Visibility = Visibility.Collapsed;
-        //    }
-        //    else
-        //    {
-        //        btnConnect.Visibility = Visibility.Collapsed;
-        //        btnDisConnect.Visibility = Visibility.Visible;
-        //    }
-
-        //}
 
         private string[] SendData;
         /// <summary>
@@ -110,13 +93,16 @@ namespace CANNetwork
         /// </summary>
         private void SingleChannelCalibration(string[] data)
         {
-            SendData=new string[5];
-            SendData[0] =AdjustID(Convert.ToInt32(data[0]) + 1, data[1]);
-            SendData[1] = AdjustParameter(Convert.ToInt32(data[0]) + 9, Convert.ToInt32(data[2]));
-            SendData[2] = AdjustParameter(Convert.ToInt32(data[0]) + 17, Convert.ToInt32(data[3]));
-            SendData[3] = AdjustByte(Convert.ToInt32(data[0]) + 33, Convert.ToInt32(data[4]), Convert.ToInt32(data[5]));
-            SendData[4] = AdjustEnable(Convert.ToInt32(data[0]) + 25, Convert.ToInt32(data[6]));
-            DataProcess.DeviceDemarcate(SendData);
+            if(!data.Contains(""))
+            {
+                SendData = new string[5];
+                SendData[0] = AdjustID(Convert.ToInt32(data[0]) + 1, data[1]);
+                SendData[1] = AdjustParameter(Convert.ToInt32(data[0]) + 9, Convert.ToInt32(data[2]));
+                SendData[2] = AdjustParameter(Convert.ToInt32(data[0]) + 17, Convert.ToInt32(data[3]));
+                SendData[3] = AdjustByte(Convert.ToInt32(data[0]) + 33, Convert.ToInt32(data[4]), Convert.ToInt32(data[5]));
+                SendData[4] = AdjustEnable(Convert.ToInt32(data[0]) + 25, Convert.ToInt32(data[6]));
+                DataProcess.DeviceDemarcate(SendData);
+            }
         }
 
 

@@ -8,13 +8,13 @@
              mc:Ignorable="d" 
              d:DesignHeight="1080" d:DesignWidth="1920">
     <Grid>
-        <GroupBox x:Name="groupBox" Header="参数设置" HorizontalAlignment="Left" Height="600" Margin="460,200,0,0" VerticalAlignment="Top" Width="1000" FontSize="36">
+        <GroupBox x:Name="groupBox" Header="参数设置" HorizontalAlignment="Left" Height="600" Margin="460,200,0,0" VerticalAlignment="Top" Width="1000" FontSize="36" FontFamily="宋体">
             <StackPanel>
                 <StackPanel Height="60"/>
                 <StackPanel Height="90" Orientation="Horizontal" >
 
-                    <Label  Margin="25,25" Height="40" Width="120" HorizontalAlignment="Left" FontSize="24">设备型号:</Label>
-                    <telerik:RadComboBox Width="240" Height="40" Margin="0,25,50,25" FontSize="24" SelectedIndex="21">
+                    <Label  Margin="25,25" Height="40" Width="120" HorizontalAlignment="Left" FontSize="24" FontFamily="宋体">设备型号:</Label>
+                    <telerik:RadComboBox Width="240" Height="40" Margin="0,25,50,25" FontSize="24" SelectedIndex="21" FontFamily="宋体">
                         <telerik:RadComboBoxItem>VCI_PCI5121</telerik:RadComboBoxItem>
                         <telerik:RadComboBoxItem>VCI_PCI9810</telerik:RadComboBoxItem>
                         <telerik:RadComboBoxItem>VCI_USBCAN1</telerik:RadComboBoxItem>
@@ -46,8 +46,8 @@
 
                     </telerik:RadComboBox >
 
-                    <Label  Margin="25,25" Height="40" Width="80" HorizontalAlignment="Left" FontSize="24">波特率:</Label>
-                    <telerik:RadComboBox Width="153" Height="40" Margin="0,25" FontSize="24" SelectedIndex="2">
+                    <Label  Margin="25,25" Height="40" Width="80" HorizontalAlignment="Left" FontSize="24" FontFamily="宋体">波特率:</Label>
+                    <telerik:RadComboBox Width="240" Height="40" Margin="0,25" FontSize="24" SelectedIndex="2" FontFamily="宋体">
                         <telerik:RadComboBoxItem>1000K</telerik:RadComboBoxItem>
                         <telerik:RadComboBoxItem>800K</telerik:RadComboBoxItem>
                         <telerik:RadComboBoxItem>500K</telerik:RadComboBoxItem>
@@ -66,8 +66,8 @@
                 <StackPanel Height="90" Orientation="Horizontal" >
 
 
-                    <Label  Margin="25,25" Height="40" Width="120" HorizontalAlignment="Left" FontSize="24">车型号码:</Label>
-                    <telerik:RadComboBox x:Name="ComboModel" Width="240" Height="40" Margin="0,25,50,25" FontSize="24" SelectedIndex="0">
+                    <Label  Margin="25,25" Height="40" Width="120" HorizontalAlignment="Left" FontSize="24" FontFamily="宋体">车型号码:</Label>
+                    <telerik:RadComboBox x:Name="ComboModel" Width="240" Height="40" Margin="0,25,50,25" FontSize="24" SelectedIndex="0" FontFamily="宋体">
 
 
                     </telerik:RadComboBox >
@@ -75,8 +75,8 @@
 
 
 
-                    <Label  Margin="25,25" Height="40" Width="80" HorizontalAlignment="Left" FontSize="24">目标ID:</Label>
-                    <TextBox x:Name="txtCanID" Width="153" Height="40" Margin="0,25" FontSize="24" Text="7ec">
+                    <Label  Margin="25,25" Height="40" Width="80" HorizontalAlignment="Left" FontSize="24" FontFamily="宋体">目标ID:</Label>
+                    <TextBox x:Name="txtCanID" Width="240" Height="40" Margin="0,25" FontSize="24" Text="7ec" FontFamily="宋体">
                     </TextBox>
 
                     <!--<Label  Margin="25,25" Height="40" Width="80" HorizontalAlignment="Left" FontSize="24">波特率:</Label>
@@ -95,8 +95,45 @@
 
                     </telerik:RadComboBox >-->
                 </StackPanel>
+                <StackPanel Height="90" Orientation="Horizontal" >
 
-                <StackPanel Margin="150" Height="90" >
+
+                    <Label  Margin="25,25" Height="40" Width="120" HorizontalAlignment="Left" FontSize="24" FontFamily="宋体">睡眠模式:</Label>
+                    <telerik:RadComboBox x:Name="ComboSleep" Width="240" Height="40" Margin="0,25,50,25" FontSize="24" SelectedIndex="1" FontFamily="宋体">
+                        <telerik:RadComboBoxItem Background="#FFF70000" >关闭</telerik:RadComboBoxItem>
+                        <telerik:RadComboBoxItem Background="#FF46FF00">开启</telerik:RadComboBoxItem>
+
+
+                    </telerik:RadComboBox >
+
+
+
+
+                    <Label  Margin="25,25" Height="40" Width="80" HorizontalAlignment="Left" FontSize="24" FontFamily="宋体">看门狗:</Label>
+                    <telerik:RadComboBox x:Name="Combowatchdog" Width="240" Height="40" Margin="0,25" FontSize="24" Text="7ec" SelectedIndex="1" FontFamily="宋体">
+                        <telerik:RadComboBoxItem Background="#FFF70000" >关闭</telerik:RadComboBoxItem>
+                        <telerik:RadComboBoxItem Background="#FF46FF00">开启</telerik:RadComboBoxItem>
+
+                    </telerik:RadComboBox>
+
+                    <!--<Label  Margin="25,25" Height="40" Width="80" HorizontalAlignment="Left" FontSize="24">波特率:</Label>
+                    <telerik:RadComboBox Width="153" Height="40" Margin="0,25" FontSize="24" SelectedIndex="2">
+                        <telerik:RadComboBoxItem>1000K</telerik:RadComboBoxItem>
+                        <telerik:RadComboBoxItem>800K</telerik:RadComboBoxItem>
+                        <telerik:RadComboBoxItem>500K</telerik:RadComboBoxItem>
+                        <telerik:RadComboBoxItem>250K</telerik:RadComboBoxItem>
+                        <telerik:RadComboBoxItem>125K</telerik:RadComboBoxItem>
+                        <telerik:RadComboBoxItem>100K</telerik:RadComboBoxItem>
+                        <telerik:RadComboBoxItem>50K</telerik:RadComboBoxItem>
+                        <telerik:RadComboBoxItem>20K</telerik:RadComboBoxItem>
+                        <telerik:RadComboBoxItem>10K</telerik:RadComboBoxItem>
+                        <telerik:RadComboBoxItem>5K</telerik:RadComboBoxItem>
+
+
+                    </telerik:RadComboBox >-->
+                </StackPanel>
+
+                <StackPanel Margin="60" Height="90" >
                     <Button x:Name="btnStarCAN"  Margin="25,25" Height="40" Width="200"  HorizontalAlignment="Center" FontSize="24" Visibility="Visible" Command="mui:LinkCommands.NavigateLink" CommandParameter="/CalibrationPage.xaml" Click="btnStarCAN_Click">确定并启动CAN</Button>
                     <Button x:Name="btnStopCAN"  Margin="25,25" Height="40" Width="200" HorizontalAlignment="Center" FontSize="24" Visibility="Collapsed" Click="btnStopCAN_Click">断开连接</Button>
 
